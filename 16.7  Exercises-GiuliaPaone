@@ -1,0 +1,17 @@
+class Time:
+    def __init__(self, hour=0, minute=0, second=0):
+        self.hour = hour
+        self.minute = minute
+        self.second = second
+
+def mul_time(time, number):
+    total_seconds = (time.hour * 3600 + time.minute * 60 + time.second) * number
+    new_time = Time()
+    new_time.hour = total_seconds // 3600
+    remainder = total_seconds % 3600
+    new_time.minute = remainder // 60
+    new_time.second = remainder % 60
+    return new_time
+
+def average_pace(finish_time, distance):
+    return mul_time(finish_time, 1/distance)
