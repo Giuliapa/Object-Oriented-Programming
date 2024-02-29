@@ -1,0 +1,40 @@
+class Time:
+    """Represents the time of day.
+       
+    attributes: hour, minute, second
+    """
+
+def time_to_int(time):
+    """Converts a Time object to an integer representing seconds."""
+    minutes = time.hour * 60 + time.minute
+    seconds = minutes * 60 + time.second
+    return seconds
+
+def int_to_time(seconds):
+    """Converts an integer representing seconds to a Time object."""
+    time = Time()
+    minutes, time.second = divmod(seconds, 60)
+    time.hour, time.minute = divmod(minutes, 60)
+    return time
+
+def mul_time(time, factor):
+    """Multiplies a Time object by a factor and returns a new Time object."""
+    seconds = time_to_int(time)
+    new_seconds = int(seconds * factor)
+    return int_to_time(new_seconds)
+
+def average_pace(time, distance):
+    """Calculates the average pace (time per distance unit) given a total time and distance."""
+    if distance == 0:
+        raise ValueError("Distance cannot be zero.")
+    return mul_time(time, 1 / distance)
+
+# Example usage:
+race_time = Time()
+race_time.hour = 1  # 1 hour
+race_time.minute = 30  # 30 minutes
+race_time.second = 0  # 0 seconds
+distance = 10  # 10 miles
+
+pace = average_pace(race_time, distance)
+print(f"Average Pace: {pace.hour} hours, {pace.minute} minutes, {pace.second} seconds per mile")
