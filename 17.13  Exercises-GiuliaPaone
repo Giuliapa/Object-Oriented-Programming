@@ -1,0 +1,23 @@
+class Time:
+    def __init__(self, seconds=0):
+        self.seconds = seconds
+
+    def __str__(self):
+        minutes, second = divmod(self.seconds, 60)
+        hour, minute = divmod(minutes, 60)
+        return f"{hour:02d}:{minute:02d}:{second:02d}"
+
+def int_to_time(seconds):
+    return Time(seconds)
+
+def add_time(t1, t2):
+    return int_to_time(t1.seconds + t2.seconds)
+
+def increment(time, seconds):
+    return int_to_time(time.seconds + seconds)
+
+def is_after(t1, t2):
+    return t1.seconds > t2.seconds
+
+def mul_time(time, factor):
+    return int_to_time(int(time.seconds * factor))
