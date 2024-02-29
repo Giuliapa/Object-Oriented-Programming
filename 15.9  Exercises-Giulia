@@ -1,0 +1,43 @@
+import math
+
+class Point:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+
+class Circle:
+    def __init__(self, center, radius):
+        self.center = center
+        self.radius = radius
+
+class Rectangle:
+    def __init__(self, corner, width, height):
+        self.corner = corner
+        self.width = width
+        self.height = height
+
+def point_in_circle(circle, point):
+    distance = math.sqrt((point.x - circle.center.x)**2 + (point.y - circle.center.y)**2)
+    return distance <= circle.radius
+
+def rect_in_circle(circle, rect):
+    corners = [
+        Point(rect.corner.x, rect.corner.y),
+        Point(rect.corner.x + rect.width, rect.corner.y),
+        Point(rect.corner.x, rect.corner.y + rect.height),
+        Point(rect.corner.x + rect.width, rect.corner.y + rect.height)
+    ]
+    return all(point_in_circle(circle, corner) for corner in corners)
+
+def rect_circle_overlap(circle, rect):
+    corners = [
+        Point(rect.corner.x, rect.corner.y),
+        Point(rect.corner.x + rect.width, rect.corner.y),
+        Point(rect.corner.x, rect.corner.y + rect.height),
+        Point(rect.corner.x + rect.width, rect.corner.y + rect.height)
+    ]
+    return any(point_in_circle(circle, corner) for corner in corners)
+
+# Instantiate a Circle object
+center = Point(150, 100)
+circle = Circle(center, 75)
