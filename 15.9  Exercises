@@ -1,0 +1,73 @@
+class Point:
+    """Represents a point in 2-D space."""
+
+class Circle:
+    """Represents a circle with a center point and radius.
+    
+    attributes: center, radius
+    """
+
+class Rectangle:
+    """Represents a rectangle.
+    
+    attributes: width, height, corner.
+    """
+
+def point_in_circle(circle, point):
+    """Check if the point is inside or on the boundary of the circle."""
+    dx = point.x - circle.center.x
+    dy = point.y - circle.center.y
+    distance = (dx ** 2 + dy ** 2) ** 0.5
+    return distance <= circle.radius
+
+def rect_in_circle(circle, rectangle):
+    """Check if the rectangle is entirely in or on the boundary of the circle."""
+    points = [
+        (rectangle.corner.x, rectangle.corner.y),
+        (rectangle.corner.x + rectangle.width, rectangle.corner.y),
+        (rectangle.corner.x, rectangle.corner.y + rectangle.height),
+        (rectangle.corner.x + rectangle.width, rectangle.corner.y + rectangle.height),
+    ]
+    for x, y in points:
+        point = Point()
+        point.x = x
+        point.y = y
+        if not point_in_circle(circle, point):
+            return False
+    return True
+
+def rect_circle_overlap(circle, rectangle):
+    """Check if any corner of the rectangle falls inside the circle."""
+    points = [
+        (rectangle.corner.x, rectangle.corner.y),
+        (rectangle.corner.x + rectangle.width, rectangle.corner.y),
+        (rectangle.corner.x, rectangle.corner.y + rectangle.height),
+        (rectangle.corner.x + rectangle.width, rectangle.corner.y + rectangle.height),
+    ]
+    for x, y in points:
+        point = Point()
+        point.x = x
+        point.y = y
+        if point_in_circle(circle, point):
+            return True
+    return False
+
+# Instantiate a Circle object
+center = Point()
+center.x = 150
+center.y = 100
+circle = Circle()
+circle.center = center
+circle.radius = 75
+
+# Instantiate a Rectangle object for demonstration
+rectangle = Rectangle()
+rectangle.corner = Point()
+rectangle.corner.x = 125
+rectangle.corner.y = 75
+rectangle.width = 50
+rectangle.height = 50
+
+# Test the functions
+print("Is the rectangle in the circle?", rect_in_circle(circle, rectangle))
+print("Does the rectangle overlap the circle?", rect_circle_overlap(circle, rectangle))
